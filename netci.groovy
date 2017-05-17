@@ -51,11 +51,11 @@ build.cmd /no-node-reuse /no-deploy-extension /${configuration.toLowerCase()}
 [true, false].each { isPR -> // Defines a closure over true and false, value assigned to isPR
     ['Debug', 'Release'].each { configuration ->
 
+        def workspacePath = new File(".").getAbsoluteFile().getParent()
         def newVsiJobName = Utilities.getFullJobName(project, "windows_integration_${configuration.toLowerCase()}", isPR)
-
         def newVsiJob = job(newVsiJobName) {
             // This opens the set of build steps that will be run.
-            steps {
+            steps {             
                 // Indicates that a batch script should be run with the build string (see above)
                 // Also available is:
                 // shell (for unix scripting)
@@ -63,24 +63,19 @@ build.cmd /no-node-reuse /no-deploy-extension /${configuration.toLowerCase()}
 echo *** Installing 1.0 CLI ***
 
 @powershell -NoProfile -ExecutionPolicy Bypass -Command "((New-Object System.Net.WebClient).DownloadFile('https://download.microsoft.com/download/B/9/F/B9F1AF57-C14A-4670-9973-CDF47209B5BF/dotnet-dev-win-x64.1.0.4.exe', 'dotnet-dev-win-x64.1.0.4.exe'))"
-dotnet-dev-win-x64.1.0.4.exe /install /quiet /norestart /log cli_install.log
+dotnet-dev-win-x64.1.0.4.exe /install /quiet /norestart /log bin\\cli_install.log
 
 echo *** Set paths to MSBuild targets ***
-echo setting VB DTT %~dp0\$bin\\${configuration}\\Rules\\Microsoft.VisualBasic.DesignTime.targets
-SET VisualBasicDesignTimeTargetsPath=%~dp0\$bin\\${configuration}\\Rules\\Microsoft.VisualBasic.DesignTime.targets
-
-echo setting F# DTT %~dp0\$bin\\${configuration}\\Rules\\Microsoft.FSharp.DesignTime.targets
-SET FSharpDesignTimeTargetsPath=%~dp0\$bin\\${configuration}\\Rules\\Microsoft.FSharp.DesignTime.targets
-
-echo setting C# DTT %~dp0\$bin\\${configuration}\\Rules\\Microsoft.FSharp.DesignTime.targets
-SET CSharpDesignTimeTargetsPath=%~dp0\$bin\\${configuration}\\Rules\\Microsoft.FSharp.DesignTime.targets
+SET VisualBasicDesignTimeTargetsPath=${workspacePath}\\bin\\${configuration}\\Rules\\Microsoft.VisualBasic.DesignTime.targets
+SET FSharpDesignTimeTargetsPath=${workspacePath}\\bin\\${configuration}\\Rules\\Microsoft.FSharp.DesignTime.targets
+SET CSharpDesignTimeTargetsPath=${workspacePath}\\bin\\${configuration}\\Rules\\Microsoft.FSharp.DesignTime.targets
 
 echo *** Build Roslyn Project System ***
 SET VS150COMNTOOLS=%ProgramFiles(x86)%\\Microsoft Visual Studio\\Preview\\Enterprise\\Common7\\Tools\\
 SET VSSDK150Install=%ProgramFiles(x86)%\\Microsoft Visual Studio\\Preview\\Enterprise\\VSSDK\\
 SET VSSDKInstall=%ProgramFiles(x86)%\\Microsoft Visual Studio\\Preview\\Enterprise\\VSSDK\\
 
-build.cmd /no-node-reuse /skiptests /integrationtests /${configuration.toLowerCase()}
+build.cmd /no-node-reuse /skiptests /no-deploy-extension /integrationtests /${configuration.toLowerCase()}
 """)
             }
         }

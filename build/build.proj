@@ -6,6 +6,7 @@
     <RepositoryRootDirectory>$(MSBuildThisFileDirectory)..\</RepositoryRootDirectory>
     <TestsDirectory>$(RepositoryRootDirectory)bin\$(Configuration)\Tests\</TestsDirectory>
     <IntegrationDirectory>$(RepositoryRootDirectory)bin\$(Configuration)\IntegrationTests\</IntegrationDirectory>
+    <BinariesDirectory>$(RepositoryRootDirectory)bin\$(Configuration)\</BinariesDirectory>
 
     <!-- Make note NUGET_PACKAGES is environment variable respected
          by NuGet.exe, so don't be tempted to change the name.-->
@@ -133,6 +134,18 @@
     <Exec Command="&quot;$(VsixExpInstallerExe)&quot; $(VsixExpInstallerArgs) $(IntegrationDirectory)Roslyn\Vsixes\ExpressionEvaluatorPackage.vsix" />
     <Exec Command="&quot;$(VsixExpInstallerExe)&quot; $(VsixExpInstallerArgs) $(IntegrationDirectory)Roslyn\Vsixes\Roslyn.VisualStudio.DiagnosticsWindow.vsix" />
     <Exec Command="&quot;$(VsixExpInstallerExe)&quot; $(VsixExpInstallerArgs) $(IntegrationDirectory)Roslyn\Vsixes\Microsoft.VisualStudio.IntegrationTest.Setup.vsix" />
+
+    <Exec Command="&quot;$(VsixExpInstallerExe)&quot; $(VsixExpInstallerArgs) $(BinariesDirectory)VisualStudioEditorsSetup.vsix" />
+    <Exec Command="&quot;$(VsixExpInstallerExe)&quot; $(VsixExpInstallerArgs) $(BinariesDirectory)ProjectSystem.vsix" />
+    <Exec Command="&quot;$(VsixExpInstallerExe)&quot; $(VsixExpInstallerArgs) $(BinariesDirectory)Microsoft.NetCore.CSharp.ProjectTemplates.Test.vsix" />
+    <Exec Command="&quot;$(VsixExpInstallerExe)&quot; $(VsixExpInstallerArgs) $(BinariesDirectory)Microsoft.NetCore.CSharp.ProjectTemplates.vsix" />
+    <Exec Command="&quot;$(VsixExpInstallerExe)&quot; $(VsixExpInstallerArgs) $(BinariesDirectory)Microsoft.NetCore.FSharp.ProjectTemplates.Test.vsix" />
+    <Exec Command="&quot;$(VsixExpInstallerExe)&quot; $(VsixExpInstallerArgs) $(BinariesDirectory)Microsoft.NetCore.FSharp.ProjectTemplates.vsix" />
+    <Exec Command="&quot;$(VsixExpInstallerExe)&quot; $(VsixExpInstallerArgs) $(BinariesDirectory)Microsoft.NetCore.VB.ProjectTemplates.Test.vsix" />
+    <Exec Command="&quot;$(VsixExpInstallerExe)&quot; $(VsixExpInstallerArgs) $(BinariesDirectory)Microsoft.NetCore.VB.ProjectTemplates.vsix" />
+    <Exec Command="&quot;$(VsixExpInstallerExe)&quot; $(VsixExpInstallerArgs) $(BinariesDirectory)Microsoft.NetStandard.CSharp.ProjectTemplates.vsix" />
+    <Exec Command="&quot;$(VsixExpInstallerExe)&quot; $(VsixExpInstallerArgs) $(BinariesDirectory)Microsoft.NetStandard.FSharp.ProjectTemplates.vsix" />
+    <Exec Command="&quot;$(VsixExpInstallerExe)&quot; $(VsixExpInstallerArgs) $(BinariesDirectory)Microsoft.NetStandard.VB.ProjectTemplates.vsix" />
 
     <Message Text="Running integrations tests for %(SolutionFile.Filename) [$(Configuration)]" Importance="high" />
 
