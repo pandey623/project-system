@@ -6,7 +6,6 @@
     <RepositoryRootDirectory>$(MSBuildThisFileDirectory)..\</RepositoryRootDirectory>
     <TestsDirectory>$(RepositoryRootDirectory)bin\$(Configuration)\Tests\</TestsDirectory>
     <IntegrationDirectory>$(RepositoryRootDirectory)bin\$(Configuration)\IntegrationTests\</IntegrationDirectory>
-    <BinariesDirectory>$(RepositoryRootDirectory)bin\$(Configuration)\</BinariesDirectory>
 
     <!-- Make note NUGET_PACKAGES is environment variable respected
          by NuGet.exe, so don't be tempted to change the name.-->
@@ -109,6 +108,15 @@
   </Target>
 
   <Target Name="TestIntegration" Condition="'$(RunIntegrationTests)' == 'true'">
+
+    <PropertyGroup>
+      <BinariesDirectory>"$([System.IO.Path]::GetFullPath('$(RepositoryRootDirectory)bin\$(Configuration)\'))"</BinariesDirectory>
+    </PropertyGroup>
+
+    <Exec Command="SET VisualBasicDesignTimeTargetsPath=$(BinariesDirectory)Rules\Microsoft.VisualBasic.DesignTime.targets"/>  
+    <Exec Command="SET FSharpDesignTimeTargetsPath=$(BinariesDirectory)Rules\Microsoft.FSharp.DesignTime.targets"/>  
+    <Exec Command="SET CSharpDesignTimeTargetsPath=$(BinariesDirectory)Rules\Microsoft.FSharp.DesignTime.targets"/>  
+
     <PropertyGroup>
       <DownloadRoslynVsixesExe>$(NUGET_PACKAGES)\roslyntools.downloadroslynvsixes\$(RoslynToolsDownloadRoslynVsixesVersion)\tools\DownloadRoslynVsixes.exe</DownloadRoslynVsixesExe>
       <DownloadRoslynVsixesArgs>"$([System.IO.Path]::GetFullPath('$(RepositoryRootDirectory)bin\$(Configuration)\IntegrationTests'))"</DownloadRoslynVsixesArgs>

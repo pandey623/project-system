@@ -65,11 +65,6 @@ echo *** Installing 1.0 CLI ***
 @powershell -NoProfile -ExecutionPolicy Bypass -Command "((New-Object System.Net.WebClient).DownloadFile('https://download.microsoft.com/download/B/9/F/B9F1AF57-C14A-4670-9973-CDF47209B5BF/dotnet-dev-win-x64.1.0.4.exe', 'dotnet-dev-win-x64.1.0.4.exe'))"
 dotnet-dev-win-x64.1.0.4.exe /install /quiet /norestart /log bin\\cli_install.log
 
-echo *** Set paths to MSBuild targets ***
-SET VisualBasicDesignTimeTargetsPath=${workspacePath}\\bin\\${configuration}\\Rules\\Microsoft.VisualBasic.DesignTime.targets
-SET FSharpDesignTimeTargetsPath=${workspacePath}\\bin\\${configuration}\\Rules\\Microsoft.FSharp.DesignTime.targets
-SET CSharpDesignTimeTargetsPath=${workspacePath}\\bin\\${configuration}\\Rules\\Microsoft.FSharp.DesignTime.targets
-
 echo *** Build Roslyn Project System ***
 SET VS150COMNTOOLS=%ProgramFiles(x86)%\\Microsoft Visual Studio\\Preview\\Enterprise\\Common7\\Tools\\
 SET VSSDK150Install=%ProgramFiles(x86)%\\Microsoft Visual Studio\\Preview\\Enterprise\\VSSDK\\
