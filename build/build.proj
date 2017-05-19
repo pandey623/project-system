@@ -110,7 +110,7 @@
   <Target Name="TestIntegration" Condition="'$(RunIntegrationTests)' == 'true'">
 
     <PropertyGroup>
-      <BinariesDirectory>"$([System.IO.Path]::GetFullPath('$(RepositoryRootDirectory)bin\$(Configuration)\'))"</BinariesDirectory>
+      <BinariesDirectory>$([System.IO.Path]::GetFullPath('$(RepositoryRootDirectory)bin\$(Configuration)\'))</BinariesDirectory>
     </PropertyGroup>
 
     <Exec Command="SET VisualBasicDesignTimeTargetsPath=$(BinariesDirectory)Rules\Microsoft.VisualBasic.DesignTime.targets"/>  
